@@ -14,7 +14,7 @@
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
-            'user' => Auth::user()->name,
+            'user' =>Auth::check() ? Auth::user()->name : 'Guest',  //checking if Auth is Authenticated or not 
             'pusherKey' => config('broadcasting.connections.pusher.key'),
         ]) !!};
 </script>
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </nav>
-
+        
         <main class="py-4">
             @yield('content')
         </main>

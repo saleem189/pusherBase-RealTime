@@ -35,7 +35,8 @@ const app = new Vue({
     data: {
         messages: [],
         user: "",
-        typing: false
+        typing: false,
+        
         
     },
     //Upon initialisation, run fetchMessages(). 
@@ -74,12 +75,16 @@ const app = new Vue({
         },
         //Receives the message that was emitted from the ChatForm Vue component
         addMessage(message) {
+            console.log('function called');
             //Pushes it to the messages array
-            this.messages.push(message);
-            //POST request to the messages route with the message data in order for our Laravel server to broadcast it.
+            this.messages.push(message);            //POST request to the messages route with the message data in order for our Laravel server to broadcast it.
             axios.post('/messages', message).then(response => {
                 console.log(response.data);
-            });
+            })
+            .finally(() => {
+                this.isLoading = false; // hide the loading screenn
+                console.log('finally');
+              })
         },
 
         
